@@ -2,6 +2,8 @@
 
 * Студент: [Татьяна Абумова](https://htmlacademy.ru/profile/id66875).
 
+Проект доступен по ссылке http://abumova.com/keksogram/
+
 
 --
 
