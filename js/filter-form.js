@@ -1,46 +1,68 @@
-(function() {
-  var uploadForm = document.forms['upload-select-image'];
-  var resizeForm = document.forms['upload-resize'];
-  var filterForm = document.forms['upload-filter'];
+//(function() {
+    var uploadForm = document.forms['upload-select-image'];
+    var resizeForm = document.forms['upload-resize'];
+    var filterForm = document.forms['upload-filter'];
 
-  var previewImage = filterForm.querySelector('.filter-image-preview');
-  var prevButton = filterForm['filter-prev'];
-  var selectedFilter = filterForm['upload-filter'];
+    var previewImage = filterForm.querySelector('.filter-image-preview');
+    var prevButton = filterForm['filter-prev'];
+    var selectedFilter = filterForm['upload-filter'];
 
-  var filterMap;
+    var imageField = document.querySelector('.pictures');
 
-  function setFilter() {
-    if (!filterMap) {
-      filterMap = {
-        'none': 'filter-none',
-        'chrome': 'filter-chrome',
-        'sepia': 'filter-sepia'
-      };
+    var filterMap;
+
+    var restoreFormValueFromCookies = function () {
+
+        if (docCookies.hasItem('upload-filter')) {
+            previewImage.className = 'filter-image-preview' + ' ' + docCookies.getItem('upload-filter');
+            document.querySelector('#upload-' + docCookies.getItem('upload-filter')).click();
+        }
+    };
+
+    function setFilter() {
+        if (!filterMap) {
+            filterMap = {
+                'none': 'filter-none',
+                'chrome': 'filter-chrome',
+                'sepia': 'filter-sepia'
+            };
+        }
+        previewImage.className = 'filter-image-preview' + ' ' + filterMap[selectedFilter.value];
+    };
+
+    for (var i = 0, l = selectedFilter.length; i < l; i++) {
+        selectedFilter[i].onchange = function(evt) {
+            setFilter();
+
+        }
     }
 
-    previewImage.className = 'filter-image-preview' + ' ' + filterMap[selectedFilter.value];
-  };
+    prevButton.onclick = function(evt) {
+        evt.preventDefault();
 
-  for (var i = 0, l = selectedFilter.length; i < l; i++) {
-    selectedFilter[i].onchange = function(evt) {
-      setFilter();
+        filterForm.reset();
+        filterForm.classList.add('invisible');
+        resizeForm.classList.remove('invisible');
+    };
+
+    filterForm.onsubmit = function(evt) {
+        evt.preventDefault();
+
+        uploadForm.classList.remove('invisible');
+        filterForm.classList.add('invisible');
+
+        docCookies.setItem('upload-filter', filterMap[selectedFilter.value]);
+
+        /*ƒобавление на страницу новой картинки*/
+        var newImage = document.createElement('A');
+        newImage.classList.add('picture');
+        newImage.setAttribute('href', '#');
+        newImage.innerHTML = '<img src=' + '"' + previewImage.src + '"' + ' width="182" height="182">';
+        imageField.appendChild(newImage);
+
+        filterForm.submit();
     }
-  }
 
-  prevButton.onclick = function(evt) {
-    evt.preventDefault();
-
-    filterForm.reset();
-    filterForm.classList.add('invisible');
-    resizeForm.classList.remove('invisible');
-  };
-
-  filterForm.onsubmit = function() {
-    evt.preventDefault();
-
-    uploadForm.classList.remove('invisible');
-    filterForm.classList.add('invisible');
-  }
-
-  setFilter();
-})();
+    setFilter();
+    restoreFormValueFromCookies();
+//})();
