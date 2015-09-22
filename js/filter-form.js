@@ -14,7 +14,7 @@
     var restoreFormValueFromCookies = function () {
 
         if (docCookies.hasItem('upload-filter')) {
-            selectedFilter.value = docCookies.getItem('upload-filter'); //записываем значение фильтра из куки в value input'a
+            selectedFilter.value = docCookies.getItem('upload-filter');
             setFilter();
         }
     };
@@ -51,9 +51,8 @@
         uploadForm.classList.remove('invisible');
         filterForm.classList.add('invisible');
 
-        docCookies.setItem('upload-filter', selectedFilter.value);//сохраняем в куки значение value radio-button'a, т.е. none/chrome/sepia
+        docCookies.setItem('upload-filter', selectedFilter.value);
 
-        /*Добавление на страницу новой картинки*/
         var newImage = document.createElement('A');
         newImage.classList.add('picture');
         newImage.setAttribute('href', '#');
