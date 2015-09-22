@@ -1,4 +1,4 @@
-//(function() {
+(function() {
     var uploadForm = document.forms['upload-select-image'];
     var resizeForm = document.forms['upload-resize'];
     var filterForm = document.forms['upload-filter'];
@@ -14,8 +14,8 @@
     var restoreFormValueFromCookies = function () {
 
         if (docCookies.hasItem('upload-filter')) {
-            previewImage.className = 'filter-image-preview' + ' ' + docCookies.getItem('upload-filter');
-            document.querySelector('#upload-' + docCookies.getItem('upload-filter')).click();
+            selectedFilter.value = docCookies.getItem('upload-filter'); //записываем значение фильтра из куки в value input'a
+            setFilter();
         }
     };
 
@@ -51,7 +51,7 @@
         uploadForm.classList.remove('invisible');
         filterForm.classList.add('invisible');
 
-        docCookies.setItem('upload-filter', filterMap[selectedFilter.value]);
+        docCookies.setItem('upload-filter', selectedFilter.value);//сохраняем в куки значение value radio-button'a, т.е. none/chrome/sepia
 
         /*Добавление на страницу новой картинки*/
         var newImage = document.createElement('A');
@@ -65,4 +65,4 @@
 
     setFilter();
     restoreFormValueFromCookies();
-//})();
+})();
