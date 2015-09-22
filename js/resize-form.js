@@ -6,34 +6,34 @@
   var previewImage = resizeForm.querySelector('.resize-image-preview');
   var prevButton = resizeForm['resize-prev'];
 
-  var toLeft = resizeForm['resize-x'];
-  var toTop = resizeForm['resize-y'];
-  var sizePicture = resizeForm['resize-size'];
+  //var toLeft = resizeForm['resize-x'];
+  //var toTop = resizeForm['resize-y'];
+  //var sizePicture = resizeForm['resize-size'];
 
-  var img_width = previewImage.width;
-  var img_height = previewImage.height;
+  //var img_width = previewImage.width;
+  //var img_height = previewImage.height;
 
-  var max_side;
-  if (img_width > img_height) {
-    max_side = img_height;
-  } else {
-    max_side = img_width;
-  }
+  //if (img_width > img_height) {
+  //  max_side = img_height;
+  //} else {
+  //  max_side = img_width;
+  //}
+  
+  var minSide = Math.min(previewImage.width, previewImage.height);
 
-  toLeft.value = 0;
-  toTop.value = 0;
-  sizePicture.value = 100;
+  resizeForm['resize-x'].value = 0;
+  resizeForm['resize-y'].value = 0;
+  resizeForm['resize-size'].value = 100;
 
-  toLeft.onchange = function(evt) {
-    sizePicture.max = max_side - parseInt(toLeft.value, 10);
-
+  resizeForm['resize-x'].onchange = function(evt) {
+    resizeForm['resize-size'].max = minSide - parseInt(this.value, 10);
   };
-  toTop.onchange = function(evt) {
-    sizePicture.max = max_side - parseInt(toTop.value, 10);
+  resizeForm['resize-y'].onchange = function(evt) {
+    resizeForm['resize-size'].max = minSide - parseInt(this.value, 10);
   };
-  sizePicture.onchange = function(evt) {
-    toLeft.max = max_side - parseInt(sizePicture.value, 10);
-    toTop.max = max_side - parseInt(sizePicture.value, 10);
+  resizeForm['resize-size'].onchange = function(evt) {
+    resizeForm['resize-x'].max = minSide - parseInt(this.value, 10);
+    resizeForm['resize-y'].max = minSide - parseInt(this.value, 10);
   };
 
   prevButton.onclick = function(evt) {
