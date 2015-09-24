@@ -40,7 +40,6 @@
     prevButton.onclick = function(evt) {
         evt.preventDefault();
 
-        filterForm.reset();
         filterForm.classList.add('invisible');
         resizeForm.classList.remove('invisible');
     };
@@ -60,7 +59,7 @@
         imageField.appendChild(newImage);
 
         filterForm.submit();
-    }
+    };
 
     setFilter();
     restoreFormValueFromCookies();
