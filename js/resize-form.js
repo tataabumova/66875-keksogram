@@ -7,7 +7,7 @@
   var prevButton = resizeForm['resize-prev'];
 
   var minSide = function(){
-    return(Math.min(previewImage.width, previewImage.height));
+    return Math.min(previewImage.width, previewImage.height);
   };
 
   resizeForm['resize-x'].value = 0;
