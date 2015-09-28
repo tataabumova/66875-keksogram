@@ -30,7 +30,9 @@
         console.log('onload');
         //newPictureElement.style.backgroundImage = 'url(\'' + pictureImage.src + '\')';
         //newPictureElement.style.backgroundSize = '182px 182px';
-        newPictureElement.querySelector('.picture img').setAttribute('src', picture['url']);
+        newPictureElement.querySelector('img').setAttribute('src', picture['url']);
+        var oldPicture = newPictureElement.querySelector('.picture img');
+        newPictureElement.replaceChild(pictureImage, oldPicture);
         clearTimeout(imageLoadTimeout);
       };
 
