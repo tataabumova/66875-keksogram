@@ -28,8 +28,9 @@
 
       pictureImage.onload = function() {
         console.log('onload');
-        newPictureElement.style.backgroundImage = 'url(\'' + pictureImage.src + '\')';
-        newPictureElement.style.backgroundSize = '182px 182px';
+        //newPictureElement.style.backgroundImage = 'url(\'' + pictureImage.src + '\')';
+        //newPictureElement.style.backgroundSize = '182px 182px';
+        newPictureElement.querySelector('.picture img').setAttribute('src', picture['url']);
         clearTimeout(imageLoadTimeout);
       };
 
