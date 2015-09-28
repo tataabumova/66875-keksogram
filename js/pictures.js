@@ -16,7 +16,6 @@
     newPictureElement.querySelector('.picture-likes').textContent = picture.likes;
 
     picturesFragment.appendChild(newPictureElement);
-    picturesContainer.appendChild(picturesFragment);
 
     if (picture.url) {
       var pictureImage = new Image();
@@ -41,4 +40,5 @@
     filtersElement.classList.remove('hidden');
   });
 
+  picturesContainer.appendChild(picturesFragment);
 })();
