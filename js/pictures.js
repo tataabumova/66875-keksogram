@@ -6,6 +6,7 @@
   var pictureTemplate = document.querySelector('#picture-template');
   var pictureTemplateElement = pictureTemplate.content.children[0];
   var picturesFragment = document.createDocumentFragment();
+  var pictureSize = 182;
 
   var REQUEST_FAILURE_TIMEOUT = 10000;
 
@@ -20,8 +21,7 @@
     if (picture.url) {
       var pictureImage = new Image();
       pictureImage.src = picture.url;
-      pictureImage.width = '182';
-      pictureImage.height = '182';
+      pictureImage.width = pictureImage.height = pictureSize;
 
       var imageLoadTimeout = setTimeout(function () {
         newPictureElement.classList.add('picture-load-failure');
