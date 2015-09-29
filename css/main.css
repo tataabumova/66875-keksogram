@@ -190,15 +190,14 @@ body {
 }
 
 .upload-resize-controls input {
-  border: 2px solid #ffe753;
-  outline: none;
+  border: none;
   border-radius: 2px;
   color: #000;
   font: 16px/1.3 'Open Sans';
   margin-left: 10px;
   margin-right: 20px;
   margin-top: -3px;
-  padding-left: 5px;
+  padding: 0 3px;
   text-align: center;
   vertical-align: middle;
   width: 3em;
@@ -244,6 +243,31 @@ input[type=radio]:checked + .upload-filter-label {
   padding-left: 12px;
   text-align: left;
   width: 980px;
+}
+
+.pictures-loading:after,
+.pictures-failure:after {
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 30px;
+  margin-left: -100px;
+  left: 50%;
+  padding: 20px;
+  position: absolute;
+  text-align: center;
+  top: 260px;
+  width: 200px;
+  z-index: 2;
+}
+
+.pictures-loading:after {
+  content: 'Загрузка...';
+}
+
+.pictures-failure:after {
+  content: 'Ошибка загрузки';
 }
 
 .picture {
@@ -345,7 +369,4 @@ input[type=radio]:checked + .upload-filter-label {
   .picture:nth-of-type(10) {
     margin-right: 600px;
   }
-}
-.hidden {
-  visibility: hidden;
 }
