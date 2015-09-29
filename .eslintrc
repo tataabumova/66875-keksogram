@@ -1,5 +1,6 @@
 globals:
   docCookies: true
+  pictures: true
 
 root: true
 
