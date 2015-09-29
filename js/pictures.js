@@ -1,4 +1,6 @@
 'use strict';
+
+
 (function() {
   var filtersElement = document.querySelector('.filters');
   filtersElement.classList.add('hidden');
