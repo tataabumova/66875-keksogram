@@ -1,3 +1,4 @@
+'use strict';
 (function() {
   var filtersElement = document.querySelector('.filters');
   filtersElement.classList.add('hidden');
@@ -10,7 +11,7 @@
 
   var REQUEST_FAILURE_TIMEOUT = 10000;
 
-  pictures.forEach(function(picture, i) {
+  pictures.forEach(function(picture) {
     var newPictureElement = pictureTemplateElement.cloneNode(true);
 
     newPictureElement.querySelector('.picture-comments').textContent = picture.comments;
@@ -23,7 +24,7 @@
       pictureImage.src = picture.url;
       pictureImage.width = pictureImage.height = pictureSize;
 
-      var imageLoadTimeout = setTimeout(function () {
+      var imageLoadTimeout = setTimeout(function() {
         newPictureElement.classList.add('picture-load-failure');
       }, REQUEST_FAILURE_TIMEOUT);
 
@@ -41,4 +42,5 @@
   });
 
   picturesContainer.appendChild(picturesFragment);
+
 })();
