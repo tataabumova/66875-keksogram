@@ -346,3 +346,6 @@ input[type=radio]:checked + .upload-filter-label {
     margin-right: 600px;
   }
 }
+.hidden {
+  visibility: hidden;
+}
