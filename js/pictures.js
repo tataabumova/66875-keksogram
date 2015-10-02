@@ -1,6 +1,5 @@
 'use strict';
 
-
 (function() {
   var ReadyState = {
     'UNSENT': 0,
@@ -16,7 +15,7 @@
   var picturesContainer = document.querySelector('.pictures');
   var pictures;
 
-  function renderPictures(picture) {
+  function renderPictures(picturesToRender) {
     picturesContainer.classList.remove('picture-load-failure');
     picturesContainer.innerHTML = '';
 
@@ -25,7 +24,7 @@
     var picturesFragment = document.createDocumentFragment();
     var pictureSize = 182;
 
-    pictures.forEach(function(picture) {
+    picturesToRender.forEach(function(picture) {
       var newPictureElement = pictureTemplateElement.cloneNode(true);
 
       newPictureElement.querySelector('.picture-comments').textContent = picture.comments;
@@ -96,8 +95,61 @@
       showLoadFailure();
     };
   }
+
+  function filterPictures(filterId) {
+    var filteredPictures = pictures.slice(0);
+    switch (filterId) {
+      case 'filter-new':
+        filteredPictures = filteredPictures.sort(function(a, b) {
+          if (a.date > b.date) {
+            return -1;
+          }
+          if (a.date < b.date) {
+            return 1;
+          }
+          if (a.date === b.date) {
+            return 0;
+          }
+        });
+        break;
+      case 'filter-discussed':
+        filteredPictures = filteredPictures.sort(function(a, b) {
+          if (a.comments > b.comments || (b.comments && a.comments === 0)) {
+            return -1;
+          }
+          if (a.comments < b.comments || (a.comments && b.comments === 0)) {
+            return 1;
+          }
+          if (a.comments === b.comments) {
+            return 0;
+          }
+        });
+        break;
+      default:
+        filteredPictures = pictures.slice(0);
+        break;
+    }
+
+    return filteredPictures;
+
+  }
+  function setActiveFilter(filterID) {
+    var filteredPictures = filterPictures(filterID);
+    renderPictures(filteredPictures);
+  }
+  function initFilters() {
+    var filtersContainer = document.querySelector('.filters');
+    filtersContainer.addEventListener('click', function(evt) {
+      var clickedFilter = evt.target;
+      setActiveFilter(clickedFilter.id);
+    });
+  }
+
+
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
     renderPictures(loadedPictures);
   });
+
+  initFilters();
 })();
