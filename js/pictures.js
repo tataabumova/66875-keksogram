@@ -83,11 +83,7 @@
             picturesContainer.classList.remove('pictures-loading');
             return callback(JSON.parse(data));
           }
-
-          if (loadedXhr.status > 400) {
-            showLoadFailure();
-          }
-          break;
+          showLoadFailure();
       }
     };
 
