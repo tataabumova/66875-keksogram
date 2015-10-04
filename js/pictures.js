@@ -14,15 +14,16 @@
   var REQUEST_FAILURE_TIMEOUT = 10000;
   var picturesContainer = document.querySelector('.pictures');
   var pictures;
+  var pictureTemplate = document.querySelector('#picture-template');
+  var pictureTemplateElement = pictureTemplate.content.children[0];
+  var picturesFragment = document.createDocumentFragment();
+  var pictureSize = 182;
+  var loadingFailPictureClass = 'picture-load-failure';
+  var picturesLoadingClass = 'pictures-loading';
 
   function renderPictures(picturesToRender) {
-    picturesContainer.classList.remove('picture-load-failure');
+    picturesContainer.classList.remove(loadingFailPictureClass);
     picturesContainer.innerHTML = '';
-
-    var pictureTemplate = document.querySelector('#picture-template');
-    var pictureTemplateElement = pictureTemplate.content.children[0];
-    var picturesFragment = document.createDocumentFragment();
-    var pictureSize = 182;
 
     picturesToRender.forEach(function(picture) {
       var newPictureElement = pictureTemplateElement.cloneNode(true);
@@ -38,7 +39,7 @@
         pictureImage.width = pictureImage.height = pictureSize;
 
         var imageLoadTimeout = setTimeout(function() {
-          newPictureElement.classList.add('picture-load-failure');
+          newPictureElement.classList.add(loadingFailPictureClass);
         }, REQUEST_FAILURE_TIMEOUT);
 
         pictureImage.onload = function() {
@@ -48,7 +49,7 @@
         };
 
         pictureImage.onerror = function() {
-          newPictureElement.classList.add('picture-load-failure');
+          newPictureElement.classList.add(loadingFailPictureClass);
         };
       }
       filtersElement.classList.remove('hidden');
@@ -73,14 +74,14 @@
         case ReadyState.OPENED:
         case ReadyState.HEADERS_RECEIVED:
         case ReadyState.LOADING:
-          picturesContainer.classList.add('pictures-loading');
+          picturesContainer.classList.add(picturesLoadingClass);
           break;
 
         case ReadyState.DONE:
         default:
           if (loadedXhr.status === 200) {
             var data = loadedXhr.response;
-            picturesContainer.classList.remove('pictures-loading');
+            picturesContainer.classList.remove(picturesLoadingClass);
             return callback(JSON.parse(data));
           }
           showLoadFailure();
@@ -122,7 +123,6 @@
         });
         break;
       default:
-        filteredPictures = pictures.slice(0);
         break;
     }
 
