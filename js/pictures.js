@@ -9,8 +9,8 @@
     'DONE': 4
   };
 
-  var filtersElement = document.querySelector('.filters');
-  filtersElement.classList.add('hidden');
+  var filtersContainer = document.querySelector('.filters');
+  filtersContainer.classList.add('hidden');
   var REQUEST_FAILURE_TIMEOUT = 10000;
   var picturesContainer = document.querySelector('.pictures');
   var pictures;
@@ -52,7 +52,7 @@
           newPictureElement.classList.add(loadingFailPictureClass);
         };
       }
-      filtersElement.classList.remove('hidden');
+      filtersContainer.classList.remove('hidden');
     });
     picturesContainer.appendChild(picturesFragment);
   }
@@ -134,7 +134,6 @@
     renderPictures(filteredPictures);
   }
   function initFilters() {
-    var filtersContainer = document.querySelector('.filters');
     filtersContainer.addEventListener('click', function(evt) {
       var clickedFilter = evt.target;
       setActiveFilter(clickedFilter.id);
