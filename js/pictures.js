@@ -16,7 +16,6 @@
   var pictures;
   var pictureTemplate = document.querySelector('#picture-template');
   var pictureTemplateElement = pictureTemplate.content.children[0];
-  var picturesFragment = document.createDocumentFragment();
   var pictureSize = 182;
   var loadingFailPictureClass = 'picture-load-failure';
   var picturesLoadingClass = 'pictures-loading';
@@ -24,7 +23,7 @@
   function renderPictures(picturesToRender) {
     picturesContainer.classList.remove(loadingFailPictureClass);
     picturesContainer.innerHTML = '';
-
+    var picturesFragment = document.createDocumentFragment();
     picturesToRender.forEach(function(picture) {
       var newPictureElement = pictureTemplateElement.cloneNode(true);
 
@@ -88,9 +87,7 @@
       }
     };
 
-    xhr.ontimeout = function() {
-      showLoadFailure();
-    };
+    xhr.ontimeout = showLoadFailure;
   }
 
   function filterPictures(filterId) {
