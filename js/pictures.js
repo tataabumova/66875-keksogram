@@ -163,9 +163,8 @@
   }
 
   function checkNextPage() {
-    console.log('Hello');
     if (isAtTheBottom() && isNextPageAvailable()) {
-      renderPictures(currentPictures, currentPage++, false);
+      window.dispatchEvent(new CustomEvent('loadneeded'));
     }
   }
   function initScroll() {
@@ -173,6 +172,9 @@
     window.addEventListener('scroll', function() {
       clearTimeout(nextPageTimeout);
       nextPageTimeout = setTimeout(checkNextPage, 100);
+    });
+    window.addEventListener('loadneeded', function() {
+      renderPictures(currentPictures, currentPage++, false);
     });
   }
 
