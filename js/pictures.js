@@ -105,6 +105,8 @@
     xhr.ontimeout = showLoadFailure;
   }
 
+  var filterElemID = 'filterID';
+
   function filterPictures(picturesToFilter, filterId) {
     var filteredPictures = pictures.slice(0);
     switch (filterId) {
@@ -138,7 +140,7 @@
         break;
     }
 
-    localStorage.setItem('filterID', filterId);
+    localStorage.setItem(filterElemID, filterId);
     return filteredPictures;
 
   }
@@ -184,8 +186,8 @@
     pictures = loadedPictures;
     currentPictures = loadedPictures;
     renderPictures(loadedPictures);
-    setActiveFilter(localStorage.getItem('filterID'));
-    var a = '#' + localStorage.getItem('filterID');
+    setActiveFilter(localStorage.getItem(filterElemID));
+    var a = '#' + localStorage.getItem(filterElemID);
     document.querySelector(a).setAttribute('checked', 'checked');
   });
   initFilters();
