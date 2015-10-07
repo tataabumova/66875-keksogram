@@ -138,6 +138,7 @@
         break;
     }
 
+    localStorage.setItem('filterID', filterId);
     return filteredPictures;
 
   }
@@ -183,6 +184,9 @@
     pictures = loadedPictures;
     currentPictures = loadedPictures;
     renderPictures(loadedPictures);
+    setActiveFilter(localStorage.getItem('filterID'));
+    var a = '#' + localStorage.getItem('filterID');
+    document.querySelector(a).attr('checked', true);
   });
   initFilters();
   initScroll();
