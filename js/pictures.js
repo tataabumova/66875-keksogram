@@ -148,7 +148,7 @@
   function setActiveFilter(filterID) {
     currentPictures = filterPictures(currentPictures, filterID);
     currentPage = 0;
-    renderPictures(currentPictures, currentPage, true);
+    renderPictures(currentPictures, currentPage);
   }
   function initFilters() {
     filtersContainer.addEventListener('click', function(evt) {
