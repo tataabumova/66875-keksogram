@@ -12,6 +12,7 @@
   var filtersContainer = document.querySelector('.filters');
   filtersContainer.classList.add('hidden');
   var REQUEST_FAILURE_TIMEOUT = 10000;
+  var GAP = 100;
   var picturesContainer = document.querySelector('.pictures');
   var pictures;
   var currentPictures;
@@ -161,7 +162,6 @@
   }
 
   function isAtTheBottom() {
-    var GAP = 100;
     return picturesContainer.getBoundingClientRect().bottom - GAP <= window.innerHeight;
   }
 
@@ -186,8 +186,9 @@
     pictures = loadedPictures;
     currentPictures = loadedPictures;
     renderPictures(loadedPictures);
-    setActiveFilter(localStorage.getItem(filterElemID));
-    var a = '#' + localStorage.getItem(filterElemID);
+    var storageFilterID = localStorage.getItem(filterElemID);
+    setActiveFilter(storageFilterID);
+    var a = '#' + storageFilterID;
     document.querySelector(a).setAttribute('checked', 'checked');
   });
   initFilters();
