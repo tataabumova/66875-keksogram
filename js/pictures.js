@@ -106,7 +106,7 @@
   }
 
   function filterPictures(picturesToFilter, filterId) {
-    var filteredPictures = picturesToFilter.slice(0);
+    var filteredPictures = pictures.slice(0);
     switch (filterId) {
       case 'filter-new':
         filteredPictures = filteredPictures.sort(function(a, b) {
@@ -162,11 +162,17 @@
     return picturesContainer.getBoundingClientRect().bottom - GAP <= window.innerHeight;
   }
 
+  function checkNextPage() {
+    console.log('Hello');
+    if (isAtTheBottom() && isNextPageAvailable()) {
+      renderPictures(currentPictures, currentPage++, false);
+    }
+  }
   function initScroll() {
+    var nextPageTimeout;
     window.addEventListener('scroll', function() {
-      if (isAtTheBottom() && isNextPageAvailable()) {
-        renderPictures(currentPictures, currentPage++, false);
-      }
+      clearTimeout(nextPageTimeout);
+      nextPageTimeout = setTimeout(checkNextPage, 100);
     });
   }
 
