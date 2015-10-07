@@ -186,7 +186,7 @@
     renderPictures(loadedPictures);
     setActiveFilter(localStorage.getItem('filterID'));
     var a = '#' + localStorage.getItem('filterID');
-    document.querySelector(a).setAttribute('checked', true);
+    document.querySelector(a).setAttribute('checked', 'checked');
   });
   initFilters();
   initScroll();
