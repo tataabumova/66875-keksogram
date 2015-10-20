@@ -12,14 +12,14 @@
   };
 
   Gallery.prototype.show = function() {
-    this._element.classList.remove('hidden');
+    this._element.classList.remove('invisible');
     this._closeButton.addEventListener('click', this._onCloseClick);
 
     this._showCurrentPhoto();
   };
 
   Gallery.prototype.hide = function() {
-    this._element.classList.add('hidden');
+    this._element.classList.add('invisible');
     this._closeButton.removeEventListener('click', this._onCloseClick);
 
     this._photos = [];

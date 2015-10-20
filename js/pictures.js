@@ -165,7 +165,7 @@
   }
 
   function initGallery() {
-    window.addEventListener('showgallery', function(evt) {
+    window.addEventListener('galleryclick', function(evt) {
       gallery.setPhotos(evt.detail.pictureElement.getPhotos());
       gallery.show();
     });

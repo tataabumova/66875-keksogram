@@ -54,13 +54,13 @@
   Photo.prototype._onClick = function(evt) {
     evt.preventDefault();
     if (!this._element.classList.contains(loadingFailPictureClass)) {
-      var galleryEvent = new CustomEvent('showgallery', {detail: { pictureElement: this}});
+      var galleryEvent = new CustomEvent('galleryclick', {detail: { pictureElement: this}});
       window.dispatchEvent(galleryEvent);
     }
   };
 
   Photo.prototype.getPhotos = function() {
-    return this._data.pictures;
+    return [this._data.url];
   };
 
   window.Photo = Photo;
