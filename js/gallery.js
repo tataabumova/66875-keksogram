@@ -1,57 +1,48 @@
 'use strict';
 
 (function() {
-  var Key = {
-    'LEFT': 37,
-    'RIGHT': 39,
-    'ESC': 27
+  var Gallery = function() {
+    this._element = document.body.querySelector('.gallery-overlay');
+    this._closeButton = this._element.querySelector('.gallery-overlay-close');
+    this._pictureElement = this._element.querySelector('.gallery-overlay-preview');
+    this._currentPhoto = 0;
+    this._photos = [];
+
+    this._onCloseClick = this._onCloseClick.bind(this);
   };
 
-  var picturesContainer = document.querySelector('.pictures');
-  var galleryElement = document.querySelector('.gallery-overlay');
-  var closeButton = galleryElement.querySelector('.gallery-overlay-close');
+  Gallery.prototype.show = function() {
+    this._element.classList.remove('invisible');
+    this._closeButton.addEventListener('click', this._onCloseClick);
 
-  function doesHaveParent(element, className) {
-    do {
-      if (element.classList.contains(className)) {
-        return !element.classList.contains('picture-load-failure');
-      }
-      element = element.parentElement;
-    } while (element);
-    return false;
-  }
-  function hideGallery() {
-    galleryElement.classList.add('invisible');
-    closeButton.removeEventListener('click', closeHandler);
-    document.body.removeEventListener('keyup', keyHandler);
-  }
-  function closeHandler(evt) {
+    this._showCurrentPhoto();
+  };
+
+  Gallery.prototype.hide = function() {
+    this._element.classList.add('invisible');
+    this._closeButton.removeEventListener('click', this._onCloseClick);
+
+    this._photos = [];
+    this._currentPhoto = 0;
+  };
+
+  Gallery.prototype._showCurrentPhoto = function() {
+    this._pictureElement.innerHTML = '';
+    var imageElement = new Image();
+    imageElement.src = this._photos[this._currentPhoto];
+    imageElement.onload = function() {
+      this._pictureElement.appendChild(imageElement);
+    }.bind(this);
+  };
+
+  Gallery.prototype._onCloseClick = function(evt) {
     evt.preventDefault();
-    hideGallery();
-  }
-  function keyHandler(evt) {
-    switch (evt.keyCode) {
-      case Key.LEFT:
-        console.log('left');
-        break;
-      case Key.RIGHT:
-        console.log('right');
-        break;
-      case Key.ESC:
-      default:
-        hideGallery();
-        break;
-    }
-  }
-  function showGallery() {
-    galleryElement.classList.remove('invisible');
-    closeButton.addEventListener('click', closeHandler);
-    document.body.addEventListener('keyup', keyHandler);
-  }
-  picturesContainer.addEventListener('click', function(evt) {
-    evt.preventDefault();
-    if (doesHaveParent(evt.target, 'picture')) {
-      showGallery();
-    }
-  });
+    this.hide();
+  };
+
+  Gallery.prototype.setPhotos = function(photos) {
+    this._photos = photos;
+  };
+
+  window.Gallery = Gallery;
 })();
