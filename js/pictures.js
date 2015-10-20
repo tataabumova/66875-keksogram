@@ -1,3 +1,5 @@
+/*global Photo: true Gallery: true*/
+
 'use strict';
 
 (function() {
@@ -14,11 +16,11 @@
   var REQUEST_FAILURE_TIMEOUT = 10000;
   var GAP = 100;
   var picturesContainer = document.querySelector('.pictures');
+  var gallery = new Gallery();
   var pictures;
   var currentPictures;
-  var pictureTemplate = document.querySelector('#picture-template');
-  var pictureTemplateElement = pictureTemplate.content.children[0];
-  var pictureSize = 182;
+  var renderedPhotos = [];
+
   var loadingFailPictureClass = 'picture-load-failure';
   var picturesLoadingClass = 'pictures-loading';
 
@@ -30,8 +32,12 @@
     pageNumber = pageNumber || 0;
 
     if (replace) {
+      var el;
+      while ((el = renderedPhotos.shift())) {
+        el.unrender();
+      }
       picturesContainer.classList.remove(loadingFailPictureClass);
-      picturesContainer.innerHTML = '';
+      //picturesContainer.innerHTML = '';
     }
 
     var picturesFragment = document.createDocumentFragment();
@@ -40,33 +46,10 @@
     var picturesTo = picturesFrom + PAGE_SIZE;
     picturesToRender = picturesToRender.slice(picturesFrom, picturesTo);
 
-    picturesToRender.forEach(function(picture) {
-      var newPictureElement = pictureTemplateElement.cloneNode(true);
-
-      newPictureElement.querySelector('.picture-comments').textContent = picture.comments;
-      newPictureElement.querySelector('.picture-likes').textContent = picture.likes;
-
-      picturesFragment.appendChild(newPictureElement);
-
-      if (picture.url) {
-        var pictureImage = new Image();
-        pictureImage.src = picture.url;
-        pictureImage.width = pictureImage.height = pictureSize;
-
-        var imageLoadTimeout = setTimeout(function() {
-          newPictureElement.classList.add(loadingFailPictureClass);
-        }, REQUEST_FAILURE_TIMEOUT);
-
-        pictureImage.onload = function() {
-          var oldPicture = newPictureElement.querySelector('img');
-          newPictureElement.replaceChild(pictureImage, oldPicture);
-          clearTimeout(imageLoadTimeout);
-        };
-
-        pictureImage.onerror = function() {
-          newPictureElement.classList.add(loadingFailPictureClass);
-        };
-      }
+    picturesToRender.forEach(function(photoData) {
+      var newPhotoElement = new Photo(photoData);
+      newPhotoElement.render(picturesFragment, REQUEST_FAILURE_TIMEOUT);
+      renderedPhotos.push(newPhotoElement);
       filtersContainer.classList.remove('hidden');
     });
     picturesContainer.appendChild(picturesFragment);
@@ -181,6 +164,12 @@
     });
   }
 
+  function initGallery() {
+    window.addEventListener('showgallery', function(evt) {
+      gallery.setPhotos(evt.detail.pictureElement.getPhotos());
+      gallery.show();
+    });
+  }
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
@@ -193,4 +182,5 @@
   });
   initFilters();
   initScroll();
+  initGallery();
 })();
