@@ -16,7 +16,6 @@
   var REQUEST_FAILURE_TIMEOUT = 10000;
   var GAP = 100;
   var picturesContainer = document.querySelector('.pictures');
-  var gallery = new Gallery();
   var pictures;
   var currentPictures;
   var renderedPhotos = [];
@@ -37,7 +36,7 @@
         el.unrender();
       }
       picturesContainer.classList.remove(loadingFailPictureClass);
-      //picturesContainer.innerHTML = '';
+      picturesContainer.innerHTML = '';
     }
 
     var picturesFragment = document.createDocumentFragment();
@@ -46,8 +45,8 @@
     var picturesTo = picturesFrom + PAGE_SIZE;
     picturesToRender = picturesToRender.slice(picturesFrom, picturesTo);
 
-    picturesToRender.forEach(function(photoData) {
-      var newPhotoElement = new Photo(photoData);
+    picturesToRender.forEach(function(photoData, index) {
+      var newPhotoElement = new Photo(photoData, picturesFrom + index);
       newPhotoElement.render(picturesFragment, REQUEST_FAILURE_TIMEOUT);
       renderedPhotos.push(newPhotoElement);
       filtersContainer.classList.remove('hidden');
@@ -166,8 +165,15 @@
 
   function initGallery() {
     window.addEventListener('galleryclick', function(evt) {
-      gallery.setPhotos(evt.detail.pictureElement.getPhotos());
-      gallery.show();
+      if (!gallery) {
+        var gallery = new Gallery();
+        var photosUrl = pictures.map(function(elem) {
+          return elem.url;
+        });
+        gallery.setPhotos(photosUrl);
+        gallery.setCurrentPhoto(evt.detail.pictureElement._index);
+        gallery.show();
+      }
     });
   }
 
