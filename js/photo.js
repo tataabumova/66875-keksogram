@@ -1,8 +1,9 @@
 'use strict';
 
 (function() {
-  var Photo = function(data) {
+  var Photo = function(data, index) {
     this._data = data;
+    this._index = index;
 
     this._onClick = this._onClick.bind(this);
   };
@@ -58,10 +59,5 @@
       window.dispatchEvent(galleryEvent);
     }
   };
-
-  Photo.prototype.getPhotos = function() {
-    return [this._data.url];
-  };
-
   window.Photo = Photo;
 })();
