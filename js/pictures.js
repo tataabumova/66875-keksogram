@@ -19,6 +19,7 @@
   var pictures;
   var currentPictures;
   var renderedPhotos = [];
+  var filteredPictures = [];
 
   var loadingFailPictureClass = 'picture-load-failure';
   var picturesLoadingClass = 'pictures-loading';
@@ -91,7 +92,7 @@
   var filterElemID = 'filterID';
 
   function filterPictures(picturesToFilter, filterId) {
-    var filteredPictures = pictures.slice(0);
+    filteredPictures = pictures.slice(0);
     switch (filterId) {
       case 'filter-new':
         filteredPictures = filteredPictures.sort(function(a, b) {
@@ -167,7 +168,7 @@
     window.addEventListener('galleryclick', function(evt) {
       if (!gallery) {
         var gallery = new Gallery();
-        var photosUrl = pictures.map(function(elem) {
+        var photosUrl = filteredPictures.map(function(elem) {
           return elem.url;
         });
         gallery.setPhotos(photosUrl);
@@ -180,6 +181,7 @@
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
     currentPictures = loadedPictures;
+    filteredPictures = loadedPictures;
     renderPictures(loadedPictures);
     var storageFilterID = localStorage.getItem(filterElemID);
     setActiveFilter(storageFilterID);
