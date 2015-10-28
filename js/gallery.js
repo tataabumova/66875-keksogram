@@ -35,7 +35,7 @@
     this._pictureElement.removeEventListener('click', this._onPhotoClick);
     document.body.removeEventListener('keydown', this._onDocumentKeyDown);
 
-    this._photos = [];
+    //this._photos = [];
     this._currentPhoto = -1;
   };
 
