@@ -19,6 +19,8 @@
   var pictures;
   var currentPictures;
   var renderedPhotos = [];
+  var filteredPictures = [];
+  var gallery;
 
   var loadingFailPictureClass = 'picture-load-failure';
   var picturesLoadingClass = 'pictures-loading';
@@ -91,7 +93,7 @@
   var filterElemID = 'filterID';
 
   function filterPictures(picturesToFilter, filterId) {
-    var filteredPictures = pictures.slice(0);
+    filteredPictures = pictures.slice(0);
     switch (filterId) {
       case 'filter-new':
         filteredPictures = filteredPictures.sort(function(a, b) {
@@ -166,25 +168,28 @@
   function initGallery() {
     window.addEventListener('galleryclick', function(evt) {
       if (!gallery) {
-        var gallery = new Gallery();
-        var photosUrl = pictures.map(function(elem) {
+        gallery = new Gallery();
+        var photosUrl = filteredPictures.map(function(elem) {
           return elem.url;
         });
         gallery.setPhotos(photosUrl);
         gallery.setCurrentPhoto(evt.detail.pictureElement._index);
-        gallery.show();
       }
+      gallery.show();
     });
   }
 
   loadPictures(function(loadedPictures) {
     pictures = loadedPictures;
     currentPictures = loadedPictures;
+    filteredPictures = loadedPictures;
     renderPictures(loadedPictures);
     var storageFilterID = localStorage.getItem(filterElemID);
     setActiveFilter(storageFilterID);
     var a = '#' + storageFilterID;
-    document.querySelector(a).setAttribute('checked', 'checked');
+    if (a) {
+      document.querySelector(a).setAttribute('checked', 'checked');
+    }
   });
   initFilters();
   initScroll();
