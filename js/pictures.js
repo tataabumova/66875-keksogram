@@ -20,6 +20,7 @@
   var currentPictures;
   var renderedPhotos = [];
   var filteredPictures = [];
+  var gallery;
 
   var loadingFailPictureClass = 'picture-load-failure';
   var picturesLoadingClass = 'pictures-loading';
@@ -166,7 +167,7 @@
 
   function initGallery() {
     window.addEventListener('galleryclick', function(evt) {
-      var gallery = new Gallery();
+      gallery = new Gallery();
       var photosUrl = filteredPictures.map(function(elem) {
         return elem.url;
       });
