@@ -167,12 +167,14 @@
 
   function initGallery() {
     window.addEventListener('galleryclick', function(evt) {
-      gallery = new Gallery();
-      var photosUrl = filteredPictures.map(function(elem) {
-        return elem.url;
-      });
-      gallery.setPhotos(photosUrl);
-      gallery.setCurrentPhoto(evt.detail.pictureElement._index);
+      if (!gallery) {
+        gallery = new Gallery();
+        var photosUrl = filteredPictures.map(function(elem) {
+          return elem.url;
+        });
+        gallery.setPhotos(photosUrl);
+        gallery.setCurrentPhoto(evt.detail.pictureElement._index);
+      }
       gallery.show();
     });
   }
