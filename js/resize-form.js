@@ -1,3 +1,6 @@
+/*global resizer: true */
+
+'use strict';
 (function() {
   var uploadForm = document.forms['upload-select-image'];
   var resizeForm = document.forms['upload-resize'];
@@ -17,7 +20,7 @@
 
   resizeForm.onsubmit = function(evt) {
     evt.preventDefault();
-    filterForm.elements['filter-image-src'] = previewImage.src;
+    filterForm.elements['filter-image-src'] = resizer.exportImage();
 
     resizeForm.classList.add('invisible');
     filterForm.classList.remove('invisible');

@@ -82,6 +82,10 @@
       // Очистка изображения.
       this._ctx.clearRect(0, 0, this._container.width, this._container.height);
 
+      this._ctx.setLineDash([4, 2]);
+      this._ctx.strokeStyle = '#FFE753';
+      this._ctx.lineWidth = 6;
+
       // Сохранение состояния канваса.
       // Подробней см. строку 132.
       this._ctx.save();
@@ -100,9 +104,6 @@
       // кадрирования. Координаты задаются от центра.
       //
       this._ctx.strokeRect(100, 100, this._resizeConstraint.x, this._resizeConstraint.y);
-      this._ctx.setLineDash([4, 2]);
-      this._ctx.strokeStyle = '#FFE753';
-      this._ctx.lineWidth = 6;
 
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
